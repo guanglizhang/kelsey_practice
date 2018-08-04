@@ -1,0 +1,20 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags floppyforms %}
+
+
+{% block title %}
+    Part {{part_number}}: Comprehension questions
+{% endblock %}
+
+{% block inner_content %}
+
+    {% include 'kelsey/InfoBlock.html' with initial_cost=Constants.q_parameters.initial_cost final_cost=Constants.q_parameters.final_cost high_payoff=Constants.q_parameters.high_payoff low_payoff=Constants.q_parameters.low_payoff   %}
+
+    <div class="well-lg well">
+      Referring to the contract is shown above:
+    </div>
+{% form form using "kelsey/bootstrap.html" %}
+
+    {% next_button %}
+    {% include 'kelsey/slider_wrapper.html' %}
+{% endblock %}

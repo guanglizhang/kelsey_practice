@@ -1,0 +1,70 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Compensated Survey Questions
+{% endblock %}
+
+{% block inner_content %}
+    <div class="well well-lg">
+        <div>
+            For Decision Task 3 you will choose between two options: Option A and Option B. Option A secures a payment
+            of {{ Constants.lotteryA }}. Option B gives you a gamble with some chance of
+            receiving {{ Constants.lotteryB.low }} and some chance of
+            receiving {{ Constants.lotteryB.high }}.
+        </div>
+        <div>
+            You will make {{ Constants.len_lottery }} decisions. One decision will count for payment. The decision that
+            counts for payment will be determined by randomly drawing a number between 1 and {{ Constants.len_lottery }}.
+            If
+            you prefer Option A in the selected decision you receive {{ Constants.lotteryA }}. If you prefer option B in
+            the selected decision then we implement the gamble. Suppose Option B is a gamble with a 25 in 100 chance of
+            receiving {{ Constants.lotteryB.low }} and 75 in 100 chance of receiving {{ Constants.lotteryB.high }}. To
+            implement the gamble we randomly choose a number from 1 to 100. If the number is less than or equal to 25
+            you
+            receive {{ Constants.lotteryB.low }}, if it is between 25 and 100 (inclusive) you
+            receive {{ Constants.lotteryB.high }}.
+
+        </div>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th><h3>Decision</h3></th>
+            <th><h3>Option A</h3></th>
+            <th><h3>OR</h3></th>
+            <th colspan="2"><h3>Option B</h3></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th colspan="3"></th>
+            <th>Chance of {{ Constants.lotteryB.low }}</th>
+            <th>Chance of {{ Constants.lotteryB.high }}</th>
+        </tr>
+        {% for i in data %}
+            <tr>
+                <td>{% if i.0 %}{{ i.0 }}{% else %}{% endif %}</td>
+                <td>{{ Constants.lotteryA }}</td>
+                <td>
+                    A <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'A' %}
+                             checked {% endif %}{% endif %} required value="A">
+                    <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'B' %}
+                           checked {% endif %}{% endif %} required value="B"> B
+                </td>
+                <td>{{ i.2 }} in 100</td>
+                <td>{{ i.3 }} in 100</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .table td, th {
+            text-align: center;
+        }
+    </style>
+{% endblock %}

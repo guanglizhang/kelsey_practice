@@ -1,0 +1,13 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags filka_tags %}
+
+{% block title %}
+    Part {{part_number}}: Example
+{% endblock %}
+
+{% block inner_content %}
+
+    {% include 'kelsey/inner_example.html' %}
+    {% next_button %}
+    {% include 'kelsey/slider_wrapper.html' %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Compensated Survey Questions
+{% endblock %}
+
+{% block inner_content %}
+    <div>
+        For Decision Task 3 you will choose between two options: Option A and Option B. Option A secures a payment
+        of {{ Constants.lotteryA }}. Option B gives you a gamble with some chance of
+        receiving {{ Constants.lotteryB.low }} and some chance of
+        receiving {{ Constants.lotteryB.high }}.
+    </div>
+    <div>
+        You will make {{ Constants.len_lottery }} decisions. One decision will count for payment. The decision that
+        counts for payment will be determined by randomly drawing a number between 1 and {{ Constants.len_lottery }}. If
+        you prefer Option A in the selected decision you receive {{ Constants.lotteryA }}. If you prefer option B in
+        the selected decision then we implement the gamble. Suppose Option B is a gamble with a 25 in 100 chance of
+        receiving {{ Constants.lotteryB.low }} and 75 in 100 chance of receiving {{ Constants.lotteryB.high }}. To
+        implement the gamble we randomly choose a number from 1 to 100. If the number is less than or equal to 25 you
+        receive {{ Constants.lotteryB.low }}, if it is between 25 and 100 (inclusive) you
+        receive {{ Constants.lotteryB.high }}.
+
+    </div>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}

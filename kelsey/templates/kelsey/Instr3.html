@@ -1,0 +1,12 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Part {{part_number}}: Instructions
+{% endblock %}
+
+{% block inner_content %}
+  {% include 'kelsey/instruction_block1.html' %}
+{% next_button %}
+
+{% endblock %}

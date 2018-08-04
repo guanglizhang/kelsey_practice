@@ -1,0 +1,3 @@
+# 07/26
+# fix T2 example computation error
+# change lowpayoff = 18, change questions answer

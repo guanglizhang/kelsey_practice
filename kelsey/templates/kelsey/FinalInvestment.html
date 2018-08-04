@@ -1,0 +1,15 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+  {% include 'kelsey/title.html' %}: Final Investment
+{% endblock %}
+
+{% block inner_content %}
+{% include 'kelsey/InfoBlock.html'  with high_payoff=player.high_payoff low_payoff=player.low_payoff%}
+
+{{form}}
+{% include 'kelsey/slider_wrapper.html' %}
+    {% next_button %}
+
+{% endblock %}

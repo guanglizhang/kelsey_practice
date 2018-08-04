@@ -1,0 +1,35 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    {% include 'kelsey/title.html' %}: Results
+{% endblock %}
+
+{% block inner_content %}
+    {% include 'kelsey/InfoBlock.html'  with show_payoff_in_modal=True high_payoff=player.high_payoff low_payoff=player.low_payoff %}
+    {% include 'kelsey/result_block.html' with first_decision=player.first_decision %}
+
+    {% next_button %}
+    {% include 'kelsey/slider_wrapper.html' %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
+
+{% endblock %}
