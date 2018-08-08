@@ -3,7 +3,57 @@
 
 <div class='well'>
 
+{% if player.treatment == 'T2' %}
+ <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h3>Contract elements:</h3></div>
 
+
+        <table class="table table-hover table-striped">
+            <tbody>
+            <tr>
+                <td> Investment cost:</td>
+                <td><span class="badge">{{ tot_cost|default:Constants.tot_cost }}</td>
+            </tr>
+            <tr>
+                <th colspan=2>Investment payoff:</th>
+
+            </tr>
+            <tr class='random {% if  not prob_realized %}  {% endif %}'>
+                <td class='{% if highlighted_low %} invalid' {% endif %}
+                ' >Low: <span
+                    class="badge">{{ low_payoff|default_if_none:player.low_payoff|c }}</span></td>
+                <td class='{% if highlighted_low %} invalid {% endif %}probs'>Chances the Payoff is Low: <span
+                        class="badge">{{ p }}%</span></td>
+            </tr>
+            <tr class='random {% if not prob_realized %}  {% endif %}'>
+                <td class='{% if highlighted_high %} invalid' {% endif %}
+                ' >High: <span
+                    class="badge">{{ high_payoff|default_if_none:player.high_payoff|c }}</span></td>
+                <td class='{% if highlighted_high %} invalid {% endif %} probs'>Chances the Payoff is High: <span
+                        class="badge">{{ p_1 }}%</span></td>
+            </tr>
+            <tr>
+                <td colspan=2 class='bg-white'>
+                    <div class="media">
+                        <div class="media-left">
+                            <img class="media-object" data-src="holder.js/64x64" alt="jar_pic"
+                                 style="width: auto; height: 100px;" src="{% static 'img/jar5050.png' %}"
+                                 data-holder-rendered="true" data-pin-nopin="true">
+                        </div>
+                        <div class="media-body">The chances you get a low payoff are the
+                            same as the chances you draw a blue ball from this bin. <br>
+                            While the chances you get a high payoff are the same as
+                            the chances you draw a red ball from this bin.
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+{% else %}
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading"><h3>Contract elements:</h3></div>
@@ -67,6 +117,8 @@
             </tbody>
         </table>
     </div>
+{% endif %}
+
     {% if prob_realized and modal_shown %}
         <div class="modal fade" tabindex="-1" role="dialog" id='myModal'>
         <div class="modal-dialog">
