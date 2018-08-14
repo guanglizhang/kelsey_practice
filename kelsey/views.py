@@ -53,14 +53,17 @@ class InstrPage(MyPage):
     def extra_displayed(self):
         return True
 
-#added for distraction task
+#added for distraction task - only appears after first stage
+#-start
 class DistrPage(MyPage):
     def is_displayed(self):
         return self.extra_displayed and (self.round_number ==Constants.second_half)
 
-
     def extra_displayed(self):
         return True
+
+    timeout_seconds = 10
+#-end
 
 class InitialInvestment(MyPage):
     form_model = models.Player
@@ -154,6 +157,11 @@ class Instr3(InstrPage):
 class Instr4(InstrPage):
     pass
 
+class Distr(DistrPage):
+    pass
+
+class Distr2(DistrPage):
+    pass
 
 class Example(InstrPage):
     ...
@@ -254,7 +262,9 @@ class ShowPayoff(LastPage):
 
 
 page_sequence = [
-    #Consent,
+    Consent,
+    #Distr,
+    Distr2,
     #Instr1,
     #Instr2,
     Instr3,
@@ -262,10 +272,10 @@ page_sequence = [
     #Q,
     #QResults,
     Separ,
-    InitialInvestment,
-    FinalInvestment,
-    Results,
+    #InitialInvestment,
+    #FinalInvestment,
+    #Results,
     #Survey,
     #Task3,
-    ShowPayoff,
+    #ShowPayoff,
 ]
