@@ -2,7 +2,11 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
+{% if player.treatment == 'T2' %}
+  {% include 'kelsey/title.html' %}: Investment
+{% else %}
   {% include 'kelsey/title.html' %}: Initial Investment
+{% endif %}
 {% endblock %}
 
 {% block inner_content %}

@@ -29,6 +29,7 @@ class Constants(BaseConstants):
     p = 0.5  # probability of low payoff
     initial_cost = c(25)
     final_cost = c(45)
+    tot_cost = initial_cost + final_cost # added for T2 instruction
     treatments = ['T1', 'T2']
     random_treatments = ['T0', 'T1']
     lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
@@ -41,9 +42,8 @@ class Constants(BaseConstants):
     is drawn?""".format(c(initial_cost)),
         'T1': """Do you want to pay an initial investment cost of {} to
     take this contract?""".format(c(initial_cost)),
-        'T2': """Do you want to pay an initial investment cost of {} and a final investment
-     cost of {} to release the randomly determined payoff?""".format(c(initial_cost), c(final_cost)),
-    }
+        'T2': """Do you want to pay an investment cost of {} to release the randomly determined payoff?""".format(c(tot_cost)),
+}
     wallet = c(1000)  # initial wallet
     low_payoff_set = [0, 18, 36]
     high_payoff_set = [90, 108, 126]
@@ -51,6 +51,7 @@ class Constants(BaseConstants):
     # values for control questions:
     q_parameters = {'initial_cost': initial_cost,
                     'final_cost': final_cost,
+                    'tot_cost': tot_cost,
                     'high_payoff': 90,
                     'low_payoff': 18,
                     'PT0ExampleHigh': 20,

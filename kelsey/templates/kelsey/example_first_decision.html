@@ -3,9 +3,14 @@
 <div class="well-lg well">
 
     <label class="control-label"
-           for="id_first_decision">Do you want to pay an initial investment cost of
-        {{ Constants.q_parameters.initial_cost|c }}{% if player.treatment == 'T2' %} and a final investment cost of
-            {{ Constants.q_parameters.final_cost|c }}{% endif %}?
+           for="id_first_decision">
+        {% if player.treatment == 'T2' %}
+        Do you want to pay an investment cost of
+        {{ Constants.q_parameters.tot_cost|c}}?
+        {% else %}
+        Do you want to pay an initial investment cost of
+        {{ Constants.q_parameters.initial_cost|c }}?
+        {% endif %}
 
     </label>
 
