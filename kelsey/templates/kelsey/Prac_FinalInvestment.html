@@ -1,0 +1,15 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+  Practice: Final Investment
+{% endblock %}
+
+{% block inner_content %}
+{% include 'kelsey/Prac_InfoBlock.html'  with high_payoff=player.prac_high_payoff low_payoff=player.prac_low_payoff%}
+
+{{form}}
+{% include 'kelsey/slider_wrapper.html' %}
+    {% next_button %}
+
+{% endblock %}
