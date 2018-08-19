@@ -102,11 +102,17 @@ class Subsession(BaseSubsession):
             p.low_payoff = p.participant.vars['payoffsets'][i][0]
             p.high_payoff = p.participant.vars['payoffsets'][i][1]
             p.investment_payoff = weighted_choice(p.low_payoff, p.high_payoff)
+
             if p.round_number <= Constants.first_half:
                 p.treatment = p.participant.vars['first_treatment']
             else:
                 p.treatment = p.participant.vars['second_treatment']
 
+        # practice -start
+        p.prac_low_payoff = 15
+        p.prac_high_payoff = 100
+        p.prac_investment_payoff = weighted_choice(p.prac_low_payoff, p.prac_high_payoff)
+        # practice -end
 
 class Group(BaseGroup):
     pass
@@ -121,6 +127,7 @@ CONFIDENT_CHOICES = ['Very Confident',
 
 class Player(BasePlayer):
     game_payoff = models.CurrencyField(doc='for ingame payoffs only')
+    practice_payoff = models.CurrencyField(doc='for prac payoffs only')
     vars_dump = models.TextField(doc='to store participant vars')
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
@@ -135,7 +142,17 @@ class Player(BasePlayer):
         investment cost of {} to
          release this payoff?""".format(c(Constants.final_cost))
     )
-
+    #practice -start
+    prac_investment_payoff = models.IntegerField()
+    prac_low_payoff = models.IntegerField()
+    prac_high_payoff = models.IntegerField()
+    prac_first_decision = models.BooleanField()
+    prac_second_decision = models.BooleanField(
+        verbose_name="""Do you want to pay the final
+        investment cost of {} to
+         release this payoff?""".format(c(Constants.final_cost))
+    )
+    #practice -end
     round_to_pay_part1 = models.IntegerField(min=1, max=Constants.first_half,
                                              doc='Random number defining payoff for the first part of the game')
     round_to_pay_part2 = models.IntegerField(min=Constants.second_half, max=Constants.num_rounds,
@@ -166,6 +183,23 @@ class Player(BasePlayer):
         # to store the game_payoffs only
         self.game_payoff = self.payoff
 
+    #practice -start
+    def prac_set_payoffs(self):
+        if self.treatment == 'T0':
+            self.prac_payoff = self.prac_first_decision * (-Constants.initial_cost +
+                                                 max(self.prac_investment_payoff - Constants.final_cost, 0))
+        if self.treatment == 'T1':
+            sec_dec = self.prac_second_decision if self.prac_second_decision is not None else 0
+            self.prac_payoff = self.prac_first_decision * (-Constants.initial_cost +
+                                                 (self.prac_investment_payoff - Constants.final_cost) * sec_dec
+                                                 )
+        if self.treatment == 'T2':
+            self.prac_payoff = self.prac_first_decision * (
+                - Constants.initial_cost + self.prac_investment_payoff - Constants.final_cost)
+        # to store the practice_payoffs only
+        self.practice_payoff = self.prac_payoff
+
+    #practice -end
     def set_lottery_payoffs(self):
 
         random_lottery = random.randint(1, Constants.len_lottery)

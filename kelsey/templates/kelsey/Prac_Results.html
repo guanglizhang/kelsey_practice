@@ -1,0 +1,35 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Practice: Results
+{% endblock %}
+
+{% block inner_content %}
+    {% include 'kelsey/Prac_InfoBlock.html'  with show_payoff_in_modal=True high_payoff=player.prac_high_payoff low_payoff=player.prac_low_payoff %}
+    {% include 'kelsey/Prac_result_block.html' with prac_first_decision=player.prac_first_decision %}
+
+    {% next_button %}
+    {% include 'kelsey/slider_wrapper.html' %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+     Intermission
+{% endblock %}
+
+
+{% block inner_content %}
+    <p> The experiment will resume in one minute. Please take a short break.</p>
+    <p> If you find it difficult to distract yourself, you can try to count the number of horses in the picture displayed below</p>
+    <center>
+        <img class="media-object" data-src="holder.js/64x64" alt="480x480"
+             style="width: 480px; height: 480px;"
+             src="https://adonai.pl/relaks/testy/graph/konie.jpg"
+             data-holder-rendered="true" data-pin-nopin="true">
+    </center>
+    <br>
+    <br>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        setTimeout(
+            function () {
+                alert("You can now proceed to the next stage of the experiment");
+            },
+            10*1000 // 10 seconds, need to change it to 60 seconds in the real experiment
+        );
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}

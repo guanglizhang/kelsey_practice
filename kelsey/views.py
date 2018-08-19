@@ -38,6 +38,15 @@ def what_to_highlight(p):
         'modal_shown': True,
     }
 
+#practice -start
+def prac_what_to_highlight(p):
+    return {
+        'highlighted_high': p.prac_investment_payoff == p.prac_high_payoff,
+        'highlighted_low': p.prac_investment_payoff == p.prac_low_payoff,
+        'prob_realized': True,
+        'modal_shown': True,
+    }
+#practice -end
 
 class LastPage(Page):
     def is_displayed(self):
@@ -53,14 +62,17 @@ class InstrPage(MyPage):
     def extra_displayed(self):
         return True
 
-#added for distraction task
+#added for distraction task - only appears after first stage
+#-start
 class DistrPage(MyPage):
     def is_displayed(self):
         return self.extra_displayed and (self.round_number ==Constants.second_half)
 
-
     def extra_displayed(self):
         return True
+
+    timeout_seconds = 10
+#-end
 
 class InitialInvestment(MyPage):
     form_model = models.Player
@@ -154,6 +166,11 @@ class Instr3(InstrPage):
 class Instr4(InstrPage):
     pass
 
+class Distr(DistrPage):
+    pass
+
+class Distr2(DistrPage):
+    pass
 
 class Example(InstrPage):
     ...
@@ -184,6 +201,47 @@ class QResults(InstrPage):
         data = zip(qtexts, results, qsolutions, is_correct)
         return {'data': data}
 
+#practice -begin
+class Prac_InitialInvestment(InstrPage):
+    form_model = models.Player
+    form_fields = ['prac_first_decision']
+
+    def vars_for_template(self):
+        curlab = Constants.first_decision_labels[self.player.treatment]
+        return {
+            'first_decision_label': curlab,
+        }
+
+class Prac_FinalInvestment(InstrPage):
+    form_model = models.Player
+    form_fields = ['prac_second_decision']
+
+    def is_displayed(self):
+        return self.player.treatment == 'T1' and self.player.prac_first_decision
+
+    def vars_for_template(self):
+        return prac_what_to_highlight(self.player)
+
+class Prac_Results(InstrPage):
+    def is_displayed(self):
+        self.player.prac_set_payoffs()
+        return True
+
+    def vars_for_template(self):
+        if self.player.prac_first_decision:
+            dict_to_return = prac_what_to_highlight(self.player)
+            if self.player.treatment == 'T2':
+                dict_to_return['show_final_investment_block'] = True
+            if (self.player.treatment == 'T0' and
+                        self.player.prac_investment_payoff >= Constants.final_cost):
+                dict_to_return['show_final_investment_block'] = True
+            if (self.player.treatment == 'T1' and
+                    self.player.prac_second_decision):
+                dict_to_return['show_final_investment_block'] = True
+            if self.player.treatment == 'T1':
+                dict_to_return['modal_shown'] = False
+            return dict_to_return
+#practice -end
 
 class Survey(LastPage):
     form_model = models.Player
@@ -255,17 +313,22 @@ class ShowPayoff(LastPage):
 
 page_sequence = [
     #Consent,
+    #Distr,
+    #Distr2,
     #Instr1,
     #Instr2,
-    Instr3,
-    Example,
+    #Instr3,
+    #Example,
+    Prac_InitialInvestment,
+    Prac_FinalInvestment,
+    Prac_Results,
     #Q,
     #QResults,
-    Separ,
+    #Separ,
     InitialInvestment,
     FinalInvestment,
     Results,
     #Survey,
     #Task3,
-    ShowPayoff,
+    #ShowPayoff,
 ]
