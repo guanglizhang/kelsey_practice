@@ -94,12 +94,6 @@ class Subsession(BaseSubsession):
                 p.vars.setdefault('first_treatment', treatments[0])
                 p.vars.setdefault('second_treatment', treatments[1])
 
-                # practice -start
-                p.prac_low_payoff = 15
-                p.prac_high_payoff = 100
-                p.prac_investment_payoff = weighted_choice(p.prac_low_payoff, p.prac_high_payoff)
-                # practice -end
-
         for p in self.get_players():
             curpayoffset = (Constants.payoffs_sets.copy())
             random.shuffle(curpayoffset)
@@ -109,10 +103,17 @@ class Subsession(BaseSubsession):
             p.high_payoff = p.participant.vars['payoffsets'][i][1]
             p.investment_payoff = weighted_choice(p.low_payoff, p.high_payoff)
 
+            # practice -start
+            p.prac_low_payoff = 15
+            p.prac_high_payoff = 100
+            p.prac_investment_payoff = weighted_choice(p.prac_low_payoff, p.prac_high_payoff)
+            # practice -end
+            
             if p.round_number <= Constants.first_half:
                 p.treatment = p.participant.vars['first_treatment']
             else:
                 p.treatment = p.participant.vars['second_treatment']
+
 
 
 class Group(BaseGroup):
