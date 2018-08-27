@@ -103,16 +103,18 @@ class Subsession(BaseSubsession):
             p.high_payoff = p.participant.vars['payoffsets'][i][1]
             p.investment_payoff = weighted_choice(p.low_payoff, p.high_payoff)
 
+            # practice -start
+            p.prac_low_payoff = 15
+            p.prac_high_payoff = 100
+            p.prac_investment_payoff = weighted_choice(p.prac_low_payoff, p.prac_high_payoff)
+            # practice -end
+
             if p.round_number <= Constants.first_half:
                 p.treatment = p.participant.vars['first_treatment']
             else:
                 p.treatment = p.participant.vars['second_treatment']
 
-        # practice -start
-        p.prac_low_payoff = 15
-        p.prac_high_payoff = 100
-        p.prac_investment_payoff = weighted_choice(p.prac_low_payoff, p.prac_high_payoff)
-        # practice -end
+
 
 class Group(BaseGroup):
     pass
@@ -168,21 +170,6 @@ class Player(BasePlayer):
 
         #  END OF set of control questions for each treatment
 
-    def set_payoffs(self):
-        if self.treatment == 'T0':
-            self.payoff = self.first_decision * (-Constants.initial_cost +
-                                                 max(self.investment_payoff - Constants.final_cost, 0))
-        if self.treatment == 'T1':
-            sec_dec = self.second_decision if self.second_decision is not None else 0
-            self.payoff = self.first_decision * (-Constants.initial_cost +
-                                                 (self.investment_payoff - Constants.final_cost) * sec_dec
-                                                 )
-        if self.treatment == 'T2':
-            self.payoff = self.first_decision * (
-                - Constants.initial_cost + self.investment_payoff - Constants.final_cost)
-        # to store the game_payoffs only
-        self.game_payoff = self.payoff
-
     #practice -start
     def prac_set_payoffs(self):
         if self.treatment == 'T0':
@@ -200,6 +187,26 @@ class Player(BasePlayer):
         self.practice_payoff = self.prac_payoff
 
     #practice -end
+
+    def set_payoffs(self):
+        if self.treatment == 'T0':
+            self.payoff = self.first_decision * (-Constants.initial_cost +
+                                                 max(self.investment_payoff - Constants.final_cost, 0))
+        if self.treatment == 'T1':
+            sec_dec = self.second_decision if self.second_decision is not None else 0
+            self.payoff = self.first_decision * (-Constants.initial_cost +
+                                                 (self.investment_payoff - Constants.final_cost) * sec_dec
+                                                 )
+        if self.treatment == 'T2':
+            self.payoff = self.first_decision * (
+                - Constants.initial_cost + self.investment_payoff - Constants.final_cost)
+        # to store the game_payoffs only
+        self.game_payoff = self.payoff
+
+        # try this
+        self.prac_first_decision = self.first_decision
+
+
     def set_lottery_payoffs(self):
 
         random_lottery = random.randint(1, Constants.len_lottery)
