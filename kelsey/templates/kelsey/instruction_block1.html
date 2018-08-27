@@ -10,10 +10,7 @@
             An investment cost.
         </li>
         <li class="list-group-item list-group-item-warning ">
-            Two possible payoffs (which one you actually get will be randomly determined).
-        </li>
-        <li class="list-group-item list-group-item-danger">
-            The chances associated with each possible payoff.
+            Two possible payoffs (which one you actually get will be randomly determined according to the stated chances).
         </li>
     </ul>
 
@@ -24,27 +21,33 @@
         <li>You will choose at the start whether or not to pay the <span class="info">investment cost</span>
         </li>
 
-        <li class="indent3">If you choose the pay the <span class="info">cost</span>, a random number generator will determine
-        the exact <span class="warning">payoff</span> according to the stated <span class="danger">chances</span>.
+        <li class="indent3">If you choose to pay the <span class="info">investment cost</span>, a random number generator will determine
+        the exact <span class="warning">payoff</span> according to the stated chances.
         </li>
 
         <li class="indent3">The <span class="warning">payoff</span> will be released
             and the <span class="info">investment cost</span>
             will be <strong>automatically</strong> charged. {% if view.round_number > 1 %}Notice that, unlike in the
-            last Part, you {% else %} You {% endif %} will make one investment decision before you know the payoffs.
-            This is the amount that will be added to your show up fee and
-            earnings in the other part of the
-            experiment:
+            last Part, you {% else %} You {% endif %} will only make one investment decision before you know the
+            <span class="danger">Earnings</span>.
         </li>
 
-        <div class="panel panel-default">
-            <div class="panel-body pagination-centered text-center">
-                <span class="ariph">-</span>
-                <button type="button" class="btn btn-info btn-lg round">Investment cost</button>
-                <span class="ariph">+</span>
-                <button type="button" class="btn btn-warning btn-lg round">payoff</button>
-            </div>
-        </div>
+        <li class="indent3">If you choose not to pay the <span class="info">investment cost</span>, your
+            <span class="danger">Earnings</span> will be 0.
+        </li>
+
+        <br>
+        
+        <li> The following flowchart illustrates the timeline of a typical round in this Part of the experiment.
+        </li>
+
+                   <div class="media">
+                        <div class="media-left">
+                            <img class="media-object" data-src="holder.js/64x64" alt="t2_flow"
+                                 style="width: auto; height: 280px;" src="/static/img/t2_flowchart.png"
+                                 data-holder-rendered="true" data-pin-nopin="true">
+                        </div>
+                   </div>
     </ul>
 
 {% else %}
@@ -62,9 +65,6 @@
         <li class="list-group-item list-group-item-warning ">
             Two possible payoffs (which one you actually get will be randomly determined).
         </li>
-        <li class="list-group-item list-group-item-danger">
-            The chances associated with each possible payoff.
-        </li>
         <li class="list-group-item list-group-item-success">
             A final investment cost.
         </li>
@@ -72,10 +72,10 @@
 
         <p>After learning these elements:</p>
 
-        <li>You will choose whether or not to pay the <span class="info">initial investment cost</span>.</li>
+        <li>You will choose whether or not to pay the <span class="info">initial investment cost </span>.</li>
 
-    <li class="indent3">If you choose the pay the <span class="info">cost</span>, a random number generator will determine
-        the exact <span class="warning">payoff</span> according to the stated <span class="danger">chances</span>.
+    <li class="indent3">If you choose the pay the <span class="info">initial investment cost</span>, a random number generator will determine
+        the exact <span class="warning">payoff</span> according to the stated chances.
     </li>
 
 
@@ -116,50 +116,25 @@
 
         <li class="indent3">You will choose whether or not to pay the <span class="success">final investment cost</span>
             in order to release the <span class="warning">payoff</span>.
-            {% if view.round_number > 1 %}Notice that, unlike in the last Part, you  now
+            {% if view.round_number > 1 %}Notice that, unlike in the last Part, you now
                 have to make a decision about whether to pay the final investment cost, which will happen
-                only after you
-                learn
-                the payoffs.  If you choose to pay the initial investment cost and choose to pay the final investment
-                cost to release the payoff (after learning the payoff amount), the investment costs and payoff will be
-                added to your show up fee and earnings in the other part of the experiment:
-
-            {% else %}
-                If you choose to pay the <span class="info">initial investment cost</span>
-                and to pay the <span class="success">final investment cost</span>
-                to release the <span class="warning">payoff</span>, the investment costs and payoff that will be added
-                to
-                your show up
-                fee and earnings in the other part of the experiment:
+                only after you learn the payoffs.
             {% endif %}
         </li>
-        <div class="panel panel-default">
-            <div class="panel-body pagination-centered text-center">
-                <span class="ariph">-</span>
-                <button type="button" class="btn btn-info btn-lg round">Initial investment cost</button>
-                <span class="ariph">+</span>
-                <button type="button" class="btn btn-warning btn-lg round">payoff</button>
-                <span class="ariph">-</span>
-                <button type="button" class="btn btn-success btn-lg round">Final investment cost</button>
-            </div>
-        </div>
-        <li class="indent3">If you choose to pay the <span class="info">initial investment cost</span>
-            and choose not to pay the <span class="success">final investment cost</span>
-            to release the <span class="warning">payoff</span>, this is the amount that will be added to your show up
-            fee and earnings in the other part of the experiment:
+        <li class="indent3">Your <span class="danger">Earnings</span> depend on your investment decisions.
         </li>
-        <div class="panel panel-default">
-            <div class="panel-body pagination-centered text-center">
-                <h3 class="inline_h3"><strong>-</strong></h3>
-                <button type="button" class="btn btn-info btn-lg round">Initial investment cost</button>
-            </div>
-        </div>
+        <br>
+        <li> The following flowchart illustrates the timeline of a typical round in this Part of the experiment.
+        </li>
 
-    <li>If you choose <strong>not</strong> to pay
-        the <span class="info">initial investment cost</span>{% if player.treatment == 'T2' %}
-            and the <span class="success">final investment cost</span>{% endif %},
-        the net earnings for that round will be zero.
-    </li>
+                   <div class="media">
+                        <div class="media-left">
+                            <img class="media-object" data-src="holder.js/64x64" alt="t1_flow"
+                                 style="width: auto; height: 300px;" src="/static/img/t1_flowchart.png"
+                                 data-holder-rendered="true" data-pin-nopin="true">
+                        </div>
+                   </div>
+
     {% endif %}
 
 {% endif %}
